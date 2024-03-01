@@ -120,7 +120,7 @@ resource "aws_eip" "eip_for_nat_gateway_az1" {
   vpc    = true
 
   tags   = {
-    Name = "nat gateway az1 eip"
+    Name    = "${var.project_name}-nat gateway az1 eip"
   }
 }
 
@@ -128,7 +128,7 @@ resource "aws_eip" "eip_for_nat_gateway_az2" {
   vpc    = true
 
   tags   = {
-    Name = "nat gateway az2 eip"
+    Name    = "${var.project_name}-nat gateway az2 eip"
   }
 }
 
@@ -137,7 +137,7 @@ resource "aws_eip" "eip_for_nat_gateway_az3" {
   vpc    = true
 
   tags   = {
-    Name = "nat gateway az3 eip"
+    Name    = "${var.project_name}-nat gateway az3 eip"
   }
 }
 
@@ -146,7 +146,7 @@ resource "aws_nat_gateway" "nat_gateway_az1" {
   subnet_id     = aws_subnet.public_subnet_az1.id
 
   tags   = {
-    Name = "nat gateway az1"
+    Name    = "${var.project_name}-nat gateway az1"
   }
 
   depends_on = [aws_internet_gateway.internet_gateway]
@@ -157,7 +157,7 @@ resource "aws_nat_gateway" "nat_gateway_az2" {
   subnet_id     = aws_subnet.public_subnet_az2.id
 
   tags   = {
-    Name = "nat gateway az2"
+    Name    = "${var.project_name}-nat gateway az2"
   }
 
   depends_on = [aws_internet_gateway.internet_gateway]
@@ -168,7 +168,7 @@ resource "aws_nat_gateway" "nat_gateway_az3" {
   subnet_id     = aws_subnet.public_subnet_az3.id
 
   tags   = {
-    Name = "nat gateway az3"
+    Name    = "${var.project_name}-nat gateway az3"
   }
 
   depends_on = [aws_internet_gateway.internet_gateway]
@@ -183,7 +183,7 @@ resource "aws_route_table" "private_route_table_az1" {
   }
 
   tags   = {
-    Name = "private route table az1"
+    Name    = "${var.project_name}-private route table az1"
   }
 }
 
@@ -202,7 +202,7 @@ resource "aws_route_table" "private_route_table_az2" {
   }
 
   tags   = {
-    Name = "private route table az2"
+    Name    = "${var.project_name}-private route table az2"
   }
 }
 
@@ -220,7 +220,7 @@ resource "aws_route_table" "private_route_table_az3" {
   }
 
   tags   = {
-    Name = "private route table az3"
+    Name    = "${var.project_name}-private route table az3"
   }
 }
 
