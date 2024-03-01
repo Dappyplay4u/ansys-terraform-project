@@ -304,7 +304,6 @@ resource "aws_network_interface" "main_network_interface-Nexus" {
 }
 
 
-
 resource "aws_instance" "Prometheus_server" {
   ami = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
@@ -407,3 +406,5 @@ resource "aws_security_group" "ngnix_security_group" {
     Name = "ngnix security group"
   }
 }
+
+
