@@ -1,4 +1,4 @@
-project_name = "asys"
+project_name = "ansys"
 
 vpc_cidr = "10.0.0.0/16"
 
