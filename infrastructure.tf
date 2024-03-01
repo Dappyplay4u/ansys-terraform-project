@@ -302,3 +302,108 @@ resource "aws_network_interface" "main_network_interface-Nexus" {
     Name    = "${var.project_name}-network_interface2"
   }
 }
+
+
+
+resource "aws_instance" "Prometheus_server" {
+  ami = data.aws_ami.ubuntu.id
+  instance_type = "t2.micro"
+  subnet_id = aws_subnet.public_subnet_az3.id
+  key_name = "postgreskey"
+  vpc_security_group_ids = [aws_security_group.ngnix_security_group.id]
+  user_data              = file("ngnixinstall.sh")
+  tags = {
+    Name    = "${var.project_name}-Server3"
+  }
+}
+
+resource "aws_network_interface" "main_network_interface-Prometheus" {
+  subnet_id   = aws_subnet.public_subnet_az3.id
+
+  tags = {
+    Name    = "${var.project_name}-network_interface3"
+  }
+}
+
+resource "aws_instance" "Grafana_server" {
+  ami = data.aws_ami.ubuntu.id
+  instance_type = "t2.micro"
+  subnet_id = aws_subnet.public_subnet_az1.id
+  key_name = "postgreskey"
+  vpc_security_group_ids = [aws_security_group.ngnix_security_group.id]
+  user_data              = file("ngnixinstall.sh")
+  tags = {
+    Name    = "${var.project_name}-Server4"
+  }
+}
+
+resource "aws_network_interface" "main_network_interface-Grafana" {
+  subnet_id   = aws_subnet.public_subnet_az1.id
+
+  tags = {
+    Name    = "${var.project_name}-network_interface4"
+  }
+}
+
+resource "aws_instance" "SonaQube_server" {
+  ami = data.aws_ami.ubuntu.id
+  instance_type = "t2.medium"
+  subnet_id = aws_subnet.public_subnet_az2.id
+  key_name = "postgreskey"
+  vpc_security_group_ids = [aws_security_group.ngnix_security_group.id]
+  user_data              = file("ngnixinstall.sh")
+  tags = {
+    Name    = "${var.project_name}-Server5"
+  }
+}
+
+resource "aws_network_interface" "main_network_interface-SonaQube" {
+  subnet_id   = aws_subnet.public_subnet_az2.id
+
+  tags = {
+    Name    = "${var.project_name}-network_interface5"
+  }
+}
+
+
+
+resource "aws_security_group" "ngnix_security_group" {
+  name        = "ngnix security group"
+  description = "enable http/https and SSH access on port 80/443/22"
+  vpc_id      = aws_vpc.vpc.id 
+
+  ingress {
+    description = "http access"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "https access"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "SSH access"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "ngnix security group"
+  }
+}
